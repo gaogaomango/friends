@@ -58,10 +58,29 @@ $dbh->query('SET NAMES utf8');
 $area_id = $_GET['id'];
 
 
-	$sql ='SELECT * FROM `friends_table` WHERE `area_table_id` = '.$area_id;
+$sql ='SELECT * FROM `friends_table` WHERE `area_table_id` = '.$area_id;
 	//echo $sql;
-	$stmt = $dbh->prepare($sql);
-	$stmt->execute();
+$stmt = $dbh->prepare($sql);
+$stmt->execute();
+
+$sql_friends = 'SELECT `area_table`.`name`,`area_table`.`gender_type`, COUNT(`friends_table`.`gender`)';
+$sql_friends .= 'AS`counter_gender`from( SELECT *,\'男\'AS `gender_type` FROM `area_table` UNION SELECT *,\'女\'AS `gender_type` FROM `area_table`)';
+$sql_friends .= '`area_table` LEFT outer Join `friends_table` on `friends_table`.`area_table_id` = `area_table`.`id`';
+$sql_friends .= 'Group by `area_table`.`name`,`area_table`.`gender_type` WHERE '.$area_id.' Order by `area_table`.`id`';
+
+$stmt_friends = $dbh->prepare($sql_friends);
+$stmt_friends->execute();
+$rec_friends = $stmt->fetch(PDO::FETCH_ASSOC);
+
+echo $sql_friends;
+
+echo $rec_friends['name'].'のお友達リスト<br/>';
+echo '男性'.$rec_friends['counter_gender'].':名<br/>';
+echo '女性'.$rec_friends['counter_gender'].':名<br/>';
+
+//先生の解答男性、女性の数をそれぞれ出す方法
+
+
 echo '<ul>';
 while(1)
 {
