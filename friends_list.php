@@ -55,10 +55,11 @@ while(1){
 <head>
 <meta http-equiv = "Content-Type" content="text/html;charset=UTF-8">
 <title>PHP基礎</title>
+
 <script type="text/javascript">//javascriptの書き方
 	function fnc_delbutton(area_id,friends_id){
-		if(confirm ('削除しますか？')){
-			location.href = 'friends_list.php?id=' + $area_id +'&friends_id=' + $friends_each['id'] +'&del_flag=1';
+		if (confirm('削除しますか？')){
+			location.href = 'friends_list.php?id=' + area_id +'&friends_id=' + friends_id +'&del_flag=1';
 		
 			return = true;
 		}
@@ -66,6 +67,7 @@ while(1){
 		return false;
 	}
 </script>
+
 </head>
 <body>
 
@@ -175,7 +177,7 @@ foreach ($friends_array as $friends_each) {
 
 	//echo '<input type="button" value="削除画面に飛ばさずに削除" onclick="if (confirm (\'削除しますか？\'))location.href=\'friends_list.php?id='.$area_id.'&friends_id='.$friends_each['id'].'&del_flag=1\'">';	
 	//関数を呼び出して削除
-	echo'<input type="button" value="関数を使って削除" onclick="fnc_delbutton('.$area_id.','.$friends_each['id'].');">';
+	echo '<input type="button" value="関数を使って削除" onclick="fnc_delbutton('.$area_id.','.$friends_each['id'].');">';
 
 	echo '</li>';
 		}
